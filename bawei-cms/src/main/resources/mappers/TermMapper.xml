@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bawei.cms.dao.TermMapper">
+
+  
+  <insert id="addTerm" parameterType="term" useGeneratedKeys="true" keyProperty="id">
+    insert into cms_terms
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </insert>
+
+	<!-- 批量添加 -->
+	<insert id="addBatch" parameterType="term" useGeneratedKeys="true"
+		keyProperty="id">
+		insert into cms_terms(name)
+		values
+		<!-- 
+			collection:参数的类型，默认就是list
+			item:集合中每次取出的对象的临时变量
+		 -->
+		<foreach collection="list" item="term" separator=",">
+			(#{term.name,jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+	<!-- 更新中间表 -->
+	<insert id="saveWithTerm" parameterType="int">
+		insert into term_article(article_id,term_id)
+		values(#{article_id},#{term_id})
+	</insert>
+</mapper>
+
