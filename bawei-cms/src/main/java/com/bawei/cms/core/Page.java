@@ -2,7 +2,7 @@
  * 
  */
 package com.bawei.cms.core;
-//qqq
+//qqq000
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
